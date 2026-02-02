@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Zyrap - Bus Ticket Booking App">
+    <title>Opening Zyrap App...</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #00b7f3 0%, #0077b3 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 24px;
+            max-width: 450px;
+            width: 100%;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            margin-bottom: 30px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .status-text {
+            font-size: 14px;
+            opacity: 0.8;
+            margin: 20px 0;
+            min-height: 20px;
+        }
+
+        .store-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 16px 32px;
+            background: white;
+            color: #00b7f3;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .store-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .store-button:active {
+            transform: translateY(0);
+        }
+
+        .features {
+            margin-top: 30px;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .feature-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .feature-icon {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🚌</div>
+        
+        <h1>Opening Zyrap App</h1>
+        <p class="subtitle">Bus Ticket Booking Made Easy</p>
+        
+        <div id="loadingSection">
+            <div class="spinner"></div>
+            <p class="status-text" id="statusText">Launching app...</p>
+        </div>
+
+        <div id="downloadSection" class="hidden">
+            <p class="status-text">App not installed?</p>
+            
+            <a href="https://play.google.com/store/apps/details?id=com.zyrap" id="playStoreLink" class="store-button">
+                📥 Download from Play Store
+            </a>
+
+            <div class="features">
+                <div class="feature-item">
+                    <span class="feature-icon">✅</span>
+                    <span>Quick & Easy Ticket Booking</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">💳</span>
+                    <span>Secure Online Payments</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">🎫</span>
+                    <span>Digital Tickets</span>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">⚡</span>
+                    <span>Real-time Bus Tracking</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - REPLACE WITH YOUR ACTUAL PACKAGE NAME
+        const CONFIG = {
+            playStoreUrl: 'https://play.google.com/store/apps/details?id=com.zyrap', // Replace with your actual package name
+            appScheme: 'zyrap',
+            deepLinkTimeout: 2500
+        };
+
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const data = urlParams.get('data');
+        
+        console.log('Data from URL:', data);
+
+        // Update Play Store link
+        document.getElementById('playStoreLink').href = CONFIG.playStoreUrl;
+
+        // Update status
+        function updateStatus(message) {
+            document.getElementById('statusText').textContent = message;
+        }
+
+        // Show download section
+        function showDownloadSection() {
+            document.getElementById('loadingSection').classList.add('hidden');
+            document.getElementById('downloadSection').classList.remove('hidden');
+        }
+
+        // Track if app opened
+        let appOpened = false;
+
+        // Try to open app
+        function attemptAppLaunch() {
+            const customSchemeUrl = `${CONFIG.appScheme}://new-ticket${data ? '?data=' + data : ''}`;
+            
+            console.log('Attempting to open app with:', customSchemeUrl);
+            
+            // Try custom scheme
+            window.location.href = customSchemeUrl;
+        }
+
+        // Monitor page visibility
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                appOpened = true;
+                console.log('App appears to have opened');
+            } else {
+                if (!appOpened) {
+                    updateStatus('App not installed?');
+                    setTimeout(showDownloadSection, 500);
+                }
+            }
+        });
+
+        // Monitor blur event
+        window.addEventListener('blur', () => {
+            appOpened = true;
+        });
+
+        // Launch app
+        attemptAppLaunch();
+
+        // Show download section after timeout
+        setTimeout(() => {
+            if (!appOpened && !document.hidden) {
+                console.log('Timeout reached, showing download section');
+                showDownloadSection();
+            }
+        }, CONFIG.deepLinkTimeout);
+
+        // Redirect to Play Store after additional timeout
+        setTimeout(() => {
+            if (!appOpened && !document.hidden) {
+                console.log('Redirecting to Play Store');
+                updateStatus('Redirecting to Play Store...');
+                setTimeout(() => {
+                    window.location.href = CONFIG.playStoreUrl;
+                }, 1000);
+            }
+        }, CONFIG.deepLinkTimeout + 2000);
+    </script>
+</body>
+</html>
