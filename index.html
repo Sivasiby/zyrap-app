@@ -6,14 +6,10 @@
     <meta name="description" content="Zyrap - Bus Ticket Booking App">
     <title>Opening Zyrap App...</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -31,244 +27,204 @@
             -webkit-backdrop-filter: blur(10px);
             padding: 40px;
             border-radius: 24px;
-            max-width: 450px;
+            max-width: 420px;
             width: 100%;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 18px;
             background: white;
             border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            font-size: 38px;
         }
 
-        h1 {
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 700;
-        }
+        h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+        .subtitle { font-size: 15px; opacity: 0.88; margin-bottom: 28px; }
 
-        .subtitle {
-            font-size: 16px;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-
+        /* ── Loading state ── */
         .spinner {
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            border-top: 4px solid white;
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top-color: white;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+            width: 56px; height: 56px;
+            animation: spin 0.9s linear infinite;
+            margin: 16px auto;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
         .status-text {
             font-size: 14px;
-            opacity: 0.8;
-            margin: 20px 0;
+            opacity: 0.82;
+            margin: 16px 0;
             min-height: 20px;
+            transition: opacity 0.3s;
         }
+
+        /* ── Download state ── */
+        #downloadSection { display: none; }
 
         .store-button {
             display: inline-block;
-            margin-top: 20px;
-            padding: 16px 32px;
+            margin-top: 18px;
+            padding: 15px 30px;
             background: white;
-            color: #00b7f3;
+            color: #007aad;
             text-decoration: none;
             border-radius: 12px;
             font-weight: 700;
             font-size: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.18);
         }
-
-        .store-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .store-button:active {
-            transform: translateY(0);
-        }
+        .store-button:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+        .store-button:active { transform: translateY(0); }
 
         .features {
-            margin-top: 30px;
+            margin-top: 24px;
             text-align: left;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 18px;
             border-radius: 12px;
         }
-
         .feature-item {
             display: flex;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 11px;
             font-size: 14px;
         }
-
-        .feature-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .feature-icon {
-            margin-right: 10px;
-            font-size: 20px;
-        }
-
-        .hidden {
-            display: none;
-        }
+        .feature-item:last-child { margin-bottom: 0; }
+        .feature-icon { margin-right: 10px; font-size: 18px; }
 
         @media (max-width: 480px) {
-            .container {
-                padding: 30px 20px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .subtitle {
-                font-size: 14px;
-            }
+            .container { padding: 28px 18px; }
+            h1 { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🚌</div>
-        
-        <h1>Opening Zyrap App</h1>
-        <p class="subtitle">Bus Ticket Booking Made Easy</p>
-        
-        <div id="loadingSection">
-            <div class="spinner"></div>
-            <p class="status-text" id="statusText">Launching app...</p>
-        </div>
+<div class="container">
+    <div class="logo">🚌</div>
+    <h1>Opening Zyrap</h1>
+    <p class="subtitle">Bus Ticket Booking Made Easy</p>
 
-        <div id="downloadSection" class="hidden">
-            <p class="status-text">App not installed?</p>
-            
-            <a href="https://play.google.com/store/apps/details?id=com.zyrap" id="playStoreLink" class="store-button">
-                📥 Download from Play Store
-            </a>
-
-            <div class="features">
-                <div class="feature-item">
-                    <span class="feature-icon">✅</span>
-                    <span>Quick & Easy Ticket Booking</span>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">💳</span>
-                    <span>Secure Online Payments</span>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">🎫</span>
-                    <span>Digital Tickets</span>
-                </div>
-                <div class="feature-item">
-                    <span class="feature-icon">⚡</span>
-                    <span>Real-time Bus Tracking</span>
-                </div>
-            </div>
-        </div>
+    <!-- State 1: trying to open app -->
+    <div id="loadingSection">
+        <div class="spinner"></div>
+        <p class="status-text" id="statusText">Launching app…</p>
     </div>
 
-    <script>
-        // Configuration - REPLACE WITH YOUR ACTUAL PACKAGE NAME
-        const CONFIG = {
-            playStoreUrl: 'https://play.google.com/store/apps/details?id=com.zyrap', // Replace with your actual package name
-            appScheme: 'zyrap',
-            deepLinkTimeout: 2500
-        };
+    <!-- State 2: app not installed -->
+    <div id="downloadSection">
+        <p class="status-text">Zyrap isn't installed on your device.</p>
+        <a id="playStoreLink"
+           href="https://play.google.com/store/apps/details?id=com.zyrap"
+           class="store-button">
+            📥 Get it on Play Store
+        </a>
+        <div class="features">
+            <div class="feature-item"><span class="feature-icon">✅</span><span>Quick &amp; Easy Ticket Booking</span></div>
+            <div class="feature-item"><span class="feature-icon">💳</span><span>Secure Online Payments</span></div>
+            <div class="feature-item"><span class="feature-icon">🎫</span><span>Digital Tickets</span></div>
+            <div class="feature-item"><span class="feature-icon">⚡</span><span>Real-time Bus Tracking</span></div>
+        </div>
+    </div>
+</div>
 
-        // Get URL parameters
-        const urlParams = new URLSearchParams(window.location.search);
-        const data = urlParams.get('data');
-        
-        console.log('Data from URL:', data);
+<script>
+    const PACKAGE   = 'com.zyrap';
+    const SCHEME    = 'zyrap';
+    const STORE_URL = 'https://play.google.com/store/apps/details?id=' + PACKAGE;
+    const TIMEOUT   = 2200;   // ms to wait before assuming app isn't installed
 
-        // Update Play Store link
-        document.getElementById('playStoreLink').href = CONFIG.playStoreUrl;
+    // ── Read ?data= from URL ──────────────────────────────────────────────
+    const data = new URLSearchParams(window.location.search).get('data') || '';
 
-        // Update status
-        function updateStatus(message) {
-            document.getElementById('statusText').textContent = message;
+    // ── Build URLs ────────────────────────────────────────────────────────
+    // 1. Android Intent URL — the RELIABLE way to open an app on Android.
+    //    If the app is not installed, Android fires the fallback (Play Store).
+    //    Format: intent://<host>/<path>#Intent;scheme=<scheme>;package=<pkg>;S.browser_fallback_url=<url>;end
+    const intentUrl = [
+        'intent://new-ticket',
+        data ? '?data=' + encodeURIComponent(data) : '',
+        '#Intent',
+        ';scheme=' + SCHEME,
+        ';package=' + PACKAGE,
+        ';S.browser_fallback_url=' + encodeURIComponent(STORE_URL),
+        ';end'
+    ].join('');
+
+    // 2. Plain custom scheme — works on iOS and as a secondary try on Android.
+    const schemeUrl = SCHEME + '://new-ticket' + (data ? '?data=' + encodeURIComponent(data) : '');
+
+    // ── UI helpers ────────────────────────────────────────────────────────
+    function setStatus(msg) {
+        document.getElementById('statusText').textContent = msg;
+    }
+
+    function showDownload() {
+        document.getElementById('loadingSection').style.display = 'none';
+        document.getElementById('downloadSection').style.display = 'block';
+    }
+
+    // ── Launch logic ──────────────────────────────────────────────────────
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS     = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+    let appLaunched = false;
+
+    // Hide the page when the user leaves → app opened
+    document.addEventListener('visibilitychange', function () {
+        if (document.hidden) appLaunched = true;
+    });
+    window.addEventListener('blur', function () {
+        appLaunched = true;
+    });
+    window.addEventListener('pagehide', function () {
+        appLaunched = true;
+    });
+
+    function launch() {
+        if (isAndroid) {
+            // Intent URL hands off to Android's package manager.
+            // If installed → opens app. If not → Android itself redirects to Play Store.
+            // We still keep a JS timeout as a belt-and-suspenders fallback.
+            setStatus('Launching app…');
+            window.location.href = intentUrl;
+
+        } else if (isIOS) {
+            // iOS: try custom scheme, fall back to App Store after timeout
+            setStatus('Launching app…');
+            window.location.href = schemeUrl;
+
+        } else {
+            // Desktop / unknown — just show the Play Store link
+            showDownload();
+            return;
         }
 
-        // Show download section
-        function showDownloadSection() {
-            document.getElementById('loadingSection').classList.add('hidden');
-            document.getElementById('downloadSection').classList.remove('hidden');
-        }
-
-        // Track if app opened
-        let appOpened = false;
-
-        // Try to open app
-        function attemptAppLaunch() {
-            const customSchemeUrl = `${CONFIG.appScheme}://new-ticket${data ? '?data=' + data : ''}`;
-            
-            console.log('Attempting to open app with:', customSchemeUrl);
-            
-            // Try custom scheme
-            window.location.href = customSchemeUrl;
-        }
-
-        // Monitor page visibility
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) {
-                appOpened = true;
-                console.log('App appears to have opened');
-            } else {
-                if (!appOpened) {
-                    updateStatus('App not installed?');
-                    setTimeout(showDownloadSection, 500);
-                }
+        // If the page is still visible after TIMEOUT ms, the app didn't open
+        setTimeout(function () {
+            if (!appLaunched && !document.hidden) {
+                setStatus('App not found — redirecting…');
+                showDownload();
+                // Also auto-redirect to Play Store after a short delay
+                setTimeout(function () {
+                    if (!appLaunched && !document.hidden) {
+                        window.location.href = STORE_URL;
+                    }
+                }, 1500);
             }
-        });
+        }, TIMEOUT);
+    }
 
-        // Monitor blur event
-        window.addEventListener('blur', () => {
-            appOpened = true;
-        });
-
-        // Launch app
-        attemptAppLaunch();
-
-        // Show download section after timeout
-        setTimeout(() => {
-            if (!appOpened && !document.hidden) {
-                console.log('Timeout reached, showing download section');
-                showDownloadSection();
-            }
-        }, CONFIG.deepLinkTimeout);
-
-        // Redirect to Play Store after additional timeout
-        setTimeout(() => {
-            if (!appOpened && !document.hidden) {
-                console.log('Redirecting to Play Store');
-                updateStatus('Redirecting to Play Store...');
-                setTimeout(() => {
-                    window.location.href = CONFIG.playStoreUrl;
-                }, 1000);
-            }
-        }, CONFIG.deepLinkTimeout + 2000);
-    </script>
+    // Small delay so the spinner is visible for a moment
+    setTimeout(launch, 400);
+</script>
 </body>
 </html>
